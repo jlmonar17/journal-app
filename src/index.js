@@ -4,9 +4,4 @@ import { JournalApp } from "./JournalApp";
 
 import "./styles/styles.scss";
 
-ReactDOM.render(
-    <React.StrictMode>
-        <JournalApp />
-    </React.StrictMode>,
-    document.getElementById("root")
-);
+ReactDOM.render(<JournalApp />, document.getElementById("root"));
