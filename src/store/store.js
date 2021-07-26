@@ -1,4 +1,5 @@
-import { combineReducers, createStore } from "redux";
+import { applyMiddleware, combineReducers, compose, createStore } from "redux";
+import thunk from "redux-thunk";
 import { authReducer } from "../reducers/authReducer";
 
 // createStore only allows to receive 1 reducer, for that reason we use combineReducers,
@@ -7,7 +8,15 @@ const reducers = combineReducers({
     auth: authReducer,
 });
 
+// References
+// https://github.com/zalmoxisus/redux-devtools-extension#usage
+// https://www.npmjs.com/package/redux-thunk
+const composeEnhancers =
+    (typeof window !== "undefined" &&
+        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+    compose;
+
 export const store = createStore(
     reducers,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    composeEnhancers(applyMiddleware(thunk))
 );
