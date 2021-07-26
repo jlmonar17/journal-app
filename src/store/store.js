@@ -1,11 +1,13 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import { authReducer } from "../reducers/authReducer";
+import { uiReducer } from "../reducers/uiReducer";
 
 // createStore only allows to receive 1 reducer, for that reason we use combineReducers,
 // because allows me to combine multiple reducers.
 const reducers = combineReducers({
     auth: authReducer,
+    ui: uiReducer,
 });
 
 // References
