@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
     BrowserRouter as Router,
@@ -14,6 +14,9 @@ import { login } from "../actions/auth";
 export const AppRouter = () => {
     const dispatch = useDispatch();
 
+    const [checkAuthentication, setCheckAuthentication] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     useEffect(() => {
         // It creates an observable, it fires when authentication change, when user
         // authenticates again, when user login without refresh page, etc
@@ -21,9 +24,19 @@ export const AppRouter = () => {
             // If user exist, that means that user is authenticated.
             if (user?.uid) {
                 dispatch(login(user.uid, user.email));
+
+                setIsLoggedIn(true);
+            } else {
+                setIsLoggedIn(false);
             }
+
+            setCheckAuthentication(false);
         });
-    }, [dispatch]);
+    }, [dispatch, setCheckAuthentication, setIsLoggedIn]);
+
+    if (checkAuthentication) {
+        return <h1>Espere....</h1>;
+    }
 
     return (
         <Router>
