@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-    BrowserRouter as Router,
-    Redirect,
-    Route,
-    Switch,
-} from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Switch } from "react-router-dom";
 import { JournalScreen } from "../components/journal/JournalScreen";
 import { AuthRouter } from "./AuthRouter";
 import { firebase } from "../firebase/firebase-config";
 import { login } from "../actions/auth";
+import { PublicRoute } from "./PublicRouter";
+import { PrivateRoute } from "./PrivateRouter";
 
 export const AppRouter = () => {
     const dispatch = useDispatch();
@@ -23,7 +20,7 @@ export const AppRouter = () => {
         firebase.auth().onAuthStateChanged((user) => {
             // If user exist, that means that user is authenticated.
             if (user?.uid) {
-                dispatch(login(user.uid, user.email));
+                dispatch(login(user.uid, user.displayName));
 
                 setIsLoggedIn(true);
             } else {
@@ -35,16 +32,25 @@ export const AppRouter = () => {
     }, [dispatch, setCheckAuthentication, setIsLoggedIn]);
 
     if (checkAuthentication) {
-        return <h1>Espere....</h1>;
+        return <h1>Wait....</h1>;
     }
 
     return (
         <Router>
             <div>
                 <Switch>
-                    <Route path="/auth" component={AuthRouter} />
+                    <PublicRoute
+                        isAuthenticated={isLoggedIn}
+                        path="/auth"
+                        component={AuthRouter}
+                    />
 
-                    <Route exact path="/" component={JournalScreen} />
+                    <PrivateRoute
+                        isAuthenticated={isLoggedIn}
+                        exact
+                        path="/"
+                        component={JournalScreen}
+                    />
 
                     <Redirect to="/auth/login" />
                 </Switch>
