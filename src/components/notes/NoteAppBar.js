@@ -6,10 +6,7 @@ export const NoteAppBar = () => {
     const { active } = useSelector((state) => state.notes);
 
     const handleSaveNote = () => {
-        const note = { ...active };
-        delete note.url;
-
-        dispatch(startSaveNote(note));
+        dispatch(startSaveNote(active));
     };
 
     const handlePictureClick = () => {

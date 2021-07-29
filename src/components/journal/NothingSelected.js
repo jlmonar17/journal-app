@@ -4,7 +4,7 @@ export const NothingSelected = () => {
             <p>
                 Select something
                 <br />
-                or creaty an entry!
+                or create an entry!
             </p>
 
             <i className="far fa-star fa-4x mt-5"></i>
