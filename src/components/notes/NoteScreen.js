@@ -27,9 +27,9 @@ export const NoteScreen = () => {
 
     useEffect(() => {
         dispatch(activeNote(formValues.id, { ...formValues }));
-    }, [formValues]);
+    }, [formValues, dispatch]);
 
-    const { title, body, url } = formValues;
+    const { title, body } = formValues;
 
     return (
         <div className="notes__main-content">
@@ -54,12 +54,9 @@ export const NoteScreen = () => {
                     onChange={handleInputChange}
                 ></textarea>
 
-                {url && (
+                {note.url && (
                     <div className="notes__image">
-                        <img
-                            src="https://iso.500px.com/wp-content/uploads/2014/07/big-one.jpg"
-                            alt="note image"
-                        />
+                        <img src={note.url} alt="note" />
                     </div>
                 )}
             </div>
