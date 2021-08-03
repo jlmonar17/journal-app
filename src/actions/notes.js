@@ -14,10 +14,16 @@ export const startNewNote = () => {
             date: new Date().getTime(),
         };
 
-        const doc = await db.collection(`${uid}/journal/notes`).add(newNote);
+        try {
+            const doc = await db
+                .collection(`${uid}/journal/notes`)
+                .add(newNote);
 
-        dispatch(activeNote(doc.id, newNote));
-        dispatch(addNewNote(doc.id, newNote));
+            dispatch(activeNote(doc.id, newNote));
+            dispatch(addNewNote(doc.id, newNote));
+        } catch (error) {
+            console.log(error);
+        }
     };
 };
 
@@ -61,7 +67,7 @@ export const startSaveNote = (note) => {
         delete noteToFirestore.id;
 
         await db.doc(`${uid}/journal/notes/${note.id}`).update(noteToFirestore);
-        console.log(note);
+
         dispatch(refreshNote(note));
         Swal.fire("Saved", note.title, "success");
     };
