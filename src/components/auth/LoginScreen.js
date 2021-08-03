@@ -9,13 +9,14 @@ export const LoginScreen = () => {
     const { loading } = useSelector((state) => state.ui);
 
     const { formValues, handleInputChange } = useForm({
-        email: "jose@mail.com",
-        password: "123456",
+        email: "",
+        password: "",
     });
 
     const { email, password } = formValues;
 
     const handleLogin = (e) => {
+        console.log("clicked");
         e.preventDefault();
 
         dispatch(smartLoginEmailPassword(email, password));
