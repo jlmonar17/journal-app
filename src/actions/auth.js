@@ -8,7 +8,7 @@ export const smartLoginEmailPassword = (email, password) => {
     return (dispatch) => {
         dispatch(startLoading());
 
-        firebase
+        return firebase
             .auth()
             .signInWithEmailAndPassword(email, password)
             .then(({ user }) => {
